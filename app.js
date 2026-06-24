@@ -41,42 +41,74 @@ const zoneByKey = Object.fromEntries(ZONES.map((z) => [z.key, z]));
 /* --- Coach Bart (@bartlopen): toffe, motiverende praat per type ----- */
 const COACH = {
   duur: [
-    "Rustig tempo vandaag, strijder. Hier bouw je je basis op.",
-    "Geen haast — deze kalme kilometers maken je sterker.",
-    "Lekker ontspannen lopen. Je mag hiervan genieten, strijder.",
-    "Rustig is precies goed. Zo blijf je fit en blessurevrij.",
+    "Rustig tempo vandaag, strijder. Hier bouw je je motor op.",
+    "Geen haast — kalme kilometers maken je later razendsnel.",
+    "Lekker ontspannen lopen. Hieruit haal je je basis, strijder.",
+    "Rustig is geen luiheid: het is slim trainen.",
+    "Praten moet makkelijk kunnen. Houd 'm kalm, strijder.",
+    "Vandaag sparen, zodat je straks kunt knallen.",
+    "Soepele benen, rustige adem. Precies goed.",
+    "Deze rustige meters zijn je fundament, strijder. Geniet ervan.",
   ],
   lang: [
-    "De lange duurloop, strijder. Rustig starten, sterk eindigen.",
-    "Tijd op de benen betaalt zich later uit. Jij kunt dit.",
-    "Verdeel je krachten en geniet van de afstand, strijder.",
-    "Elke kilometer telt vandaag. Mooi bezig.",
+    "De lange duurloop, strijder. Rustig starten, sterk finishen.",
+    "Tijd op de benen betaalt zich uit op racedag.",
+    "Verdeel je krachten en blijf ontspannen, strijder.",
+    "Elke kilometer maakt je taaier. Mooi bezig.",
+    "Niet jagen vandaag — duur gaat vóór tempo.",
+    "Kop erbij, benen los. Jij maalt deze afstand weg, strijder.",
+    "Constant ritme, rustige adem. Zo bouw je uithoudingsvermogen.",
+    "Dit is je geduldtraining, strijder. Het loont.",
   ],
   tempo: [
-    "Tempotraining, strijder. Stevig, maar netjes onder controle.",
-    "Zoek een gelijkmatig en vlot ritme. Dit maakt je sneller.",
-    "Net buiten je comfortzone — daar zit de winst, strijder.",
-    "Beheerst doorzetten. Je tilt je niveau omhoog.",
+    "Tempoblok, strijder. Stevig, maar onder controle.",
+    "Gelijkmatig en vlot — hier til je je snelheid op.",
+    "Net buiten je comfortzone. Daar zit de winst, strijder.",
+    "Beheerst doorbijten. Voel je drempel opschuiven.",
+    "Vlot ritme vasthouden, niet versnellen tot je verzuurt.",
+    "Dit doet pit krijgen, strijder. Blijf scherp.",
+    "Korte zinnen moeten nog net lukken. Perfect tempo.",
+    "Hier word je sneller. Houd 'm strak, strijder.",
   ],
   interval: [
-    "Intervallen, strijder. Korte inspanningen, goed herstellen.",
-    "Houd elke herhaling gelijk en soepel. Focus op je techniek.",
-    "Even pittig, daarna rust. Jij hebt dit onder controle, strijder.",
-    "Scherp en gecontroleerd. Hier komt je snelheid vandaan.",
+    "Intervallen, strijder. Korte knallen, goed herstellen.",
+    "Houd elke herhaling gelijk en explosief-soepel.",
+    "Even diep gaan, dan rust. Jij hebt de regie, strijder.",
+    "Scherp en gecontroleerd — nooit blind sprinten.",
+    "Hier komt je topsnelheid vandaan. Geef 'm, strijder.",
+    "Techniek voorop: lichte voeten, hoge cadans.",
+    "Elke herhaling een kopie van de vorige. Strak, strijder.",
+    "Pittig, maar baas over je eigen tempo. Knallen.",
   ],
   doel: [
-    "Doeltempo, strijder. Onthoud goed hoe dit voelt voor je race.",
-    "Dit is je wedstrijdritme. Vertrouw op je benen.",
-    "Beheerst op tempo blijven — precies waar je het voor doet.",
-    "Voel je 10K-tempo, strijder. Je bent er klaar voor.",
+    "Doeltempo, strijder. Prent dit ritme in je benen.",
+    "Dit is je racegevoel. Vertrouw erop.",
+    "Beheerst op tempo blijven — hier doe je het voor, strijder.",
+    "Voel je 10K-tempo. Op de dag zelf voelt het als thuis.",
+    "Niet sneller dan dit. Discipline, strijder.",
+    "Gelijkmatig knallen op racetempo. Mooi gecontroleerd.",
+    "Onthoud hoe dit voelt — dit ga je terugzien op de start.",
+    "Race-ritme repeteren, strijder. Je bent er klaar voor.",
   ],
   herstel: [
     "Hersteldag, strijder. Rustig aan, daar word je beter van.",
-    "Vandaag laad je op. Herstel hoort net zo goed bij trainen.",
+    "Vandaag laad je op. Herstel hoort bij hard trainen.",
     "Houd het licht en kalm. Morgen sta je er sterker.",
-    "Goed dat je rust neemt, strijder. Slim getraind.",
+    "Slim dat je rust pakt, strijder. Zo voorkom je blessures.",
+    "Niets bewijzen vandaag. Gewoon losdraaien.",
+    "Rust is waar de winst binnenkomt. Geniet, strijder.",
+    "Kalme benen, hoofd leeg. Precies wat je nodig hebt.",
   ],
 };
+
+const DONE = [
+  "💥 Knap gedaan, strijder!",
+  "🔥 Lekker geknald, strijder!",
+  "💪 Sterk werk, strijder!",
+  "✅ Afgevinkt — top, strijder!",
+  "⚡ Weer een stap sneller, strijder!",
+  "🙌 Mooi bezig, strijder!",
+];
 const coachLine = (zone) => {
   const arr = COACH[zone] || COACH.duur;
   return arr[Math.floor(Math.random() * arr.length)];
@@ -215,6 +247,15 @@ let log = loadLog();
 const sid = (week, day) => `w${week}-${day}`;
 const flatSessions = PLAN.flatMap((w) => w.sessions.map((s) => ({ ...s, week: w.week })));
 const totalSessions = flatSessions.length;
+
+function autoTime(raw) {
+  const digits = String(raw).replace(/\D/g, "").slice(0, 6);
+  if (digits.length <= 2) return digits;
+  const parts = []; let s = digits;
+  while (s.length > 2) { parts.unshift(s.slice(-2)); s = s.slice(0, -2); }
+  parts.unshift(s);
+  return parts.join(":");
+}
 
 function parseTime(str) {
   if (!str) return null;
@@ -509,7 +550,7 @@ function openDetail(week, day) {
 
   const recalc = () => ($("fPace").textContent = fmtPace(paceSeconds($("fDistance").value, $("fTime").value)) || "—");
   $("fDistance").addEventListener("input", recalc);
-  $("fTime").addEventListener("input", recalc);
+  $("fTime").addEventListener("input", () => { $("fTime").value = autoTime($("fTime").value); recalc(); });
 
   const collect = () => ({
     ...log[id],
@@ -529,7 +570,7 @@ function openDetail(week, day) {
     const cur = collect();
     cur.done = !cur.done;
     log[id] = cur; saveLog();
-    if (cur.done) { celebrate(); toast(s.race ? "🏅 Finisher! Wat een strijder!" : "💥 Knap gedaan, strijder!"); }
+    if (cur.done) { celebrate(); toast(s.race ? "🏅 Finisher! Wat een strijder!" : DONE[Math.floor(Math.random() * DONE.length)]); }
     closeDetail();
   });
 
