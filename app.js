@@ -460,10 +460,10 @@ function renderWeeks() {
         </button>`;
     }).join("");
     html += `
-      <article class="week-card reveal ${w.week === cw ? "is-current" : ""}" style="--i:${i % 4}">
+      <article class="week-card reveal ${w.week === cw ? "is-current" : ""} ${w.week < cw ? (w.sessions.every((x) => log[sid(w.week, x.day)]?.done) ? "is-complete" : "is-missed") : ""}" style="--i:${i % 4}">
         <header class="week-head">
           <div><span class="week-no">Week ${w.week}</span><span class="week-dates">${w.dates}</span></div>
-          ${w.week === cw ? `<span class="week-tag tag-now">Nu</span>` : tagOf(w)}
+          ${w.week === cw ? `<span class="week-tag tag-now">Nu</span>` : w.week < cw ? (w.sessions.every((x) => log[sid(w.week, x.day)]?.done) ? `<span class="week-tag tag-done">✓ af</span>` : `<span class="week-tag tag-missed">gemist</span>`) : tagOf(w)}
         </header>
         <div class="session-list">${sess}</div>
       </article>`;
