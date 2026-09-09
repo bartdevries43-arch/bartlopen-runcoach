@@ -1,10 +1,10 @@
 /* Eenvoudige offline-cache voor Run Coach. Verhoog CACHE bij elke update. */
-const CACHE = "runcoach-dave-v4-kim-polish-x-shift-c2-c3-logo3-p2-u2-m2-bugfix-schuifmelding-opslag";
+const CACHE = "runcoach-dave-v4-kim-polish-x-shift-c2-c3-logo3-p2-u2-m2-bugfix-schuifmelding-opslag-aftel";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=7-c2-c3-p2-u2-m2-bugfix-schuifmelding-opslag",
-  "./app.js?v=7-c2-c3-p2-u2-m2-bugfix-schuifmelding-opslag",
+  "./styles.css?v=7-c2-c3-p2-u2-m2-bugfix-schuifmelding-opslag-aftel",
+  "./app.js?v=7-c2-c3-p2-u2-m2-bugfix-schuifmelding-opslag-aftel",
   "./coach.jpg",
   "./coach-logo.png",
   "./bartlopen-runcoach.png",
