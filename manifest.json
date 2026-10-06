@@ -1,7 +1,7 @@
 {
-  "name": "Op naar 10K · bartlopen Run Coach",
-  "short_name": "Op naar 10K",
-  "description": "Persoonlijk 10 km-trainingsschema met coaching van @bartlopen, stats en badges.",
+  "name": "Sneller op 10K (Dave) · bartlopen Run Coach",
+  "short_name": "Sneller op 10K",
+  "description": "Het persoonlijke schema van Dave richting 10 km onder 52:30, met coaching van @bartlopen.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
